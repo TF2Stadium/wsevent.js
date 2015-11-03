@@ -1,0 +1,18 @@
+{
+  "name": "wsevent.js",
+  "homepage": "https://github.com/vibhavp/wsevent.js",
+  "authors": [
+    "Vibhav Pant <vibhavp@gmail.com>"
+  ],
+  "description": "A JavaScript client to WSEvents",
+  "main": "wsevent.js",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
