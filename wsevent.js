@@ -1,11 +1,14 @@
 'use strict';
 
-class Socket{
-    constructor(conn, extractor) {
+function Socket(conn, extractor) {
+  if (!(this instanceof Socket)) {
+    return new Socket(conn, extractor);
+  }
+
 	this.conn = conn;
 	this.replyHandlers = [];
 	this.eventHandlers = [];
-	this.extractor = extractor	
+	this.extractor = extractor
 	var self = this;
 	conn.onmessage = function (event) {
 	    try {
@@ -33,7 +36,7 @@ class Socket{
 		}
 
 	    } else {
-	
+
 		var callback = self.eventHandlers[self.extractor(json.data)];
 		if (callback != undefined) {
 		    callback(JSON.parse(json.data.data));
@@ -51,5 +54,4 @@ class Socket{
 	    this.replyHandlers[id] = callback;
 	    this.conn.send(JSON.stringify(json));
 	}
-    }
 }
