@@ -5,7 +5,7 @@ class Socket{
 	this.conn = conn;
 	this.replyHandlers = [];
 	this.eventHandlers = [];
-
+	this.extractor = extractor	
 	var self = this;
 	conn.onmessage = function (event) {
 	    try {
@@ -33,9 +33,10 @@ class Socket{
 		}
 
 	    } else {
+	
 		var callback = self.eventHandlers[self.extractor(json.data)];
 		if (callback != undefined) {
-		    callback(json.data);
+		    callback(JSON.parse(json.data.data));
 		}
 	    }
 	};
