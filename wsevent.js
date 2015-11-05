@@ -1,6 +1,13 @@
 (function (window) {
   'use strict';
 
+  var genUniqueId = (function () {
+    var counter = 1;
+    return function () {
+      return counter++;
+    };
+  })();
+
   function Socket(conn, extractor) {
     if (!(this instanceof Socket)) {
       throw new TypeError('Cannot call a class as a function');
@@ -36,9 +43,10 @@
         return;
       }
 
-      if (typeof json.id === 'string') {
+      var id = json.id;
+      if (id > -1) {
         // Handle response messages
-        var id = json.id;
+        id = json.id;
         callback = self.replyHandlers[id];
 
         if (callback) {
@@ -61,10 +69,14 @@
   };
 
   Socket.prototype.Emit = function Emit(data, callback) {
-    var id = asmCrypto.SHA1.hex(""+(Date.now() ^ Math.random()*1000));
-    var json = {id: id, data: data};
+    var id = genUniqueId();
+    var msg = {
+      id: id,
+      data: data
+    };
+
     this.replyHandlers[id] = callback;
-    this.conn.send(JSON.stringify(json));
+    this.conn.send(JSON.stringify(msg));
   };
 
   window.Socket = Socket;
