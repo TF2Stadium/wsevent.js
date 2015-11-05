@@ -43,7 +43,7 @@
         return;
       }
 
-      var id = json.id;
+      var id = parseInt(json.id, 10);
       if (id > -1) {
         // Handle response messages
         id = json.id;
@@ -71,7 +71,7 @@
   Socket.prototype.Emit = function Emit(data, callback) {
     var id = genUniqueId();
     var msg = {
-      id: id,
+      id: ""+id,
       data: data
     };
 
