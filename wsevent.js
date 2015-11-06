@@ -136,11 +136,16 @@
           delete self.replyHandlers[id];
         }
       } else {
-        callback = self.eventHandlers[extractor(json.data)];
+        var name = extractor(json.data);
+
+        // Note: messages from the server are an extra layer deep
+        // (so .data.data instead of the single .data of responses)
+        var data = JSON.parse(json.data.data);
+        self.onmessage(name, data);
+
+        callback = self.eventHandlers[name];
         if (callback !== undefined) {
-          // Note: messages from the server are an extra layer deep
-          // (so .data.data instead of the single .data of responses)
-          callback(JSON.parse(json.data.data));
+          callback(data);
         }
       }
     };
