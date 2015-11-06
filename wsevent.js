@@ -109,9 +109,6 @@
     this.conn.onmessage = function (e) {
       var json, callback;
 
-      // All
-      self.onmessage(e);
-
       try {
         json = JSON.parse(e.data);
       }
