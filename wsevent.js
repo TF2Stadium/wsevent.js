@@ -129,7 +129,7 @@
         callback = self.replyHandlers[id];
 
         if (callback) {
-          callback(JSON.parse(json.data));
+          callback((json.data));
           delete self.replyHandlers[id];
         }
       } else {
@@ -137,7 +137,7 @@
 
         // Note: messages from the server are an extra layer deep
         // (so .data.data instead of the single .data of responses)
-        var data = JSON.parse(json.data.data);
+        var data = (json.data.data);
         self.onmessage(name, data);
 
         callback = self.eventHandlers[name];
