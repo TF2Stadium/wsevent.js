@@ -66,6 +66,7 @@
     }
 
     connect();
+    this.connect = connect;
   }
 
   ReconnectingWebSocket.prototype.send = function send(data) {
@@ -104,6 +105,10 @@
     };
     this.conn.onclose = function () {
       self.onclose();
+    };
+
+    this.connect = function () {
+      self.conn.connect();
     };
 
     this.replyHandlers = Object.create(null);
