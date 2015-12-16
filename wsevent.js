@@ -37,7 +37,7 @@
     }
 
     function unreliableOnClose(e) {
-      self.onclose();
+      self.onclose(e);
 
       if (curRetries < maxRetries) {
         ++curRetries;
@@ -163,7 +163,7 @@
   Socket.prototype.Emit = function Emit(data, callback) {
     var id = genUniqueId();
     var msg = {
-      id: ""+id,
+      id: '' + id,
       data: data
     };
 
