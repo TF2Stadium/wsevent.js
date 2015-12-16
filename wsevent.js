@@ -19,8 +19,11 @@
     opts = opts || {};
 
     var self = this;
-    var timeout = opts.timeout || 100;
-    var maxRetries = opts.maxRetries || 5;
+    function getOpt(name, def) {
+      return opts.hasOwnProperty(name)? opts[name] : def;
+    }
+    var timeout = getOpt('timeout', 100);
+    var maxRetries = getOpt('maxRetries', 5);
     var curRetries = 0;
 
     // External event callbacks
@@ -95,7 +98,7 @@
     this.onclose = noop;
     this.onmessage = noop;
 
-    this.conn = new ReconnectingWebSocket(url);
+    this.conn = new ReconnectingWebSocket(url, opts);
     this.conn.onopen = function () {
       self.onopen();
     };
