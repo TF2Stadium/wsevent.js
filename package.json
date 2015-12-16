@@ -1,6 +1,6 @@
 {
   "name": "wsevent.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "WebSocket messaging library for TF2Stadium: client",
   "main": "wsevent.js",
   "scripts": {
