@@ -1,1 +1,1 @@
-[![Bower version](https://badge.fury.io/bo/wsevent.js.svg)](https://badge.fury.io/bo/wsevent.js)
+[![Circle CI](https://circleci.com/gh/TF2Stadium/wsevent.js.svg?style=svg)](https://circleci.com/gh/TF2Stadium/wsevent.js) [![Bower version](https://badge.fury.io/bo/wsevent.js.svg)](https://badge.fury.io/bo/wsevent.js)
