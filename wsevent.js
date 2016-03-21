@@ -115,7 +115,7 @@
     this.eventHandlers = Object.create(null);
 
     this.conn.onmessage = function (e) {
-      var json, callback;
+      var json, callbacks;
 
       try {
         json = JSON.parse(e.data);
@@ -134,10 +134,10 @@
       if (id > -1) {
         // Handle response messages
         id = json.id;
-        callback = self.replyHandlers[id];
+        var callback = self.replyHandlers[id];
 
         if (callback) {
-          callback((json.data));
+          callback(json.data);
           delete self.replyHandlers[id];
         }
       } else {
@@ -148,16 +148,33 @@
         var data = (json.data.data);
         self.onmessage(name, data);
 
-        callback = self.eventHandlers[name];
-        if (callback !== undefined) {
-          callback(data);
+        callbacks = self.eventHandlers[name];
+        if (callbacks !== undefined) {
+          callbacks.forEach(function (f) {
+            f(data);
+          });
         }
       }
     };
   }
 
   Socket.prototype.On = function On(e, callback) {
-    this.eventHandlers[e] = callback;
+    if (!Object.hasOwnProperty.call(this.eventHandlers, e)) {
+      this.eventHandlers[e] = [];
+    }
+
+    this.eventHandlers[e].push(callback);
+  };
+
+  Socket.prototype.Off = function Off(e, callback) {
+    if (!Object.hasOwnProperty.call(this.eventHandlers, e)) {
+      return;
+    }
+
+    this.eventHandlers[e] =
+      this.eventHandlers[e].filter(function (thisCallback) {
+        return thisCallback !== callback;
+      });
   };
 
   Socket.prototype.Emit = function Emit(data, callback) {
