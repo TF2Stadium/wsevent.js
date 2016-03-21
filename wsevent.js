@@ -166,6 +166,10 @@
     this.eventHandlers[e].push(callback);
   };
 
+  Socket.prototype.on = function On(e, callback) {
+    this.On(e, callback);
+  };
+
   Socket.prototype.Off = function Off(e, callback) {
     if (!Object.hasOwnProperty.call(this.eventHandlers, e)) {
       return;
@@ -177,6 +181,10 @@
       });
   };
 
+  Socket.prototype.off = function off(e, callback) {
+    this.Off(e, callback);
+  };
+
   Socket.prototype.Emit = function Emit(data, callback) {
     var id = genUniqueId();
     var msg = {
@@ -186,6 +194,10 @@
 
     this.replyHandlers[id] = callback;
     this.conn.send(JSON.stringify(msg));
+  };
+
+  Socket.prototype.emit = function emit(data, callback) {
+    this.Emit(data, callback);
   };
 
   window.Socket = Socket;
